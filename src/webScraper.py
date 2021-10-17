@@ -6,13 +6,25 @@ class WebScraper:
     def __init__(self, url):
         self.url = url
         self.output_data = []
+        self.headers = {
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,\
+            */*;q=0.8",
+            "Accept-Encoding": "gzip, deflate, sdch, br",
+            "Accept-Language": "en-US,en;q=0.8",
+            "Cache-Control": "no-cache",
+            "dnt": "1",
+            "Pragma": "no-cache",
+            "Upgrade-Insecure-Requests": "1",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\
+            (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
+        }
 
     def __download_web(self):
         """
         Descarrega la web guardada a la variable self.url
         :return: Objecte del tipus BeautifulSoup (contingut de la web en HTML)
         """
-        page = requests.get(self.url)
+        page = requests.get(self.url, self.headers)
 
         if page.status_code == 200:
             return BeautifulSoup(page.content, "html.parser")
@@ -23,6 +35,7 @@ class WebScraper:
         :return: null
         """
         list_categories = self.__get_categories(content)
+        print(list_categories)
 
     def __get_categories(self, content):
         """
