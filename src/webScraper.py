@@ -111,7 +111,7 @@ class WebScraper:
                         "urlArticle": url,
                         "creador": data_json['creator'],
                         "dataPublicacio": data_json['datePublished'],
-                        "paraulesClaus": data_json['keywords']
+                        "paraulesClaus": ', '.join(data_json['keywords'])
                     })
 
     def save_csv(self):
@@ -133,6 +133,11 @@ class WebScraper:
         file.close()
 
     def init_csv(self, content):
+        """
+        Inicialitza el procés de creació del dataset
+        :param content: llistat de categories
+        :return: None
+        """
         for content_a in content:
             print("Getting articles with the category: " + content_a[0])
             articles = self.get_articles(content_a[1])
